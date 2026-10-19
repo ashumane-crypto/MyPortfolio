@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
-import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Certifications from './components/Certifications';
 import Achievements from './components/Achievements';
 import Contact from './components/Contact';
+import Footer from './components/Footer'; // Added Footer
 
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -35,8 +35,9 @@ export default function App() {
           font-family: 'Inter', sans-serif;
           transition: background-color 0.3s, color 0.3s;
         }
-        body.dark-mode { background-color: #0b0c10; color: #f8f9fa; }
-        body.light-mode { background-color: #f4f6fb; color: #111; }
+        /* Perfect Dark & Light Mode Colors */
+        body.dark-mode { background-color: #0b0c10; color: #f8f9fa; --card-bg: rgba(255,255,255,0.05); --border-color: rgba(255,255,255,0.1); }
+        body.light-mode { background-color: #f4f6fb; color: #111111; --card-bg: rgba(0,0,0,0.03); --border-color: rgba(0,0,0,0.1); }
 
         .app-wrapper {
           min-height: 100vh;
@@ -44,10 +45,9 @@ export default function App() {
           flex-direction: column;
         }
 
-        /* Global Section Styling */
         section {
           padding: 6rem 8%;
-          border-bottom: 1px solid rgba(128,128,128,0.1);
+          border-bottom: 1px solid var(--border-color);
         }
         
         .section-subtitle {
@@ -90,9 +90,8 @@ export default function App() {
 
       <Navbar isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
       
-      <main>
+      <main style={{ flex: 1 }}>
         <Home />
-        <About />
         <Skills />
         <Projects />
         <Experience />
@@ -100,6 +99,8 @@ export default function App() {
         <Achievements />
         <Contact />
       </main>
+
+      <Footer />
     </div>
   );
 }
