@@ -1,6 +1,6 @@
 
 import React from 'react';
-import profilePic from '../assets/Profile.jpeg';
+import profilePic from '../assets/Profile.png';
 import resumePdf from '../assets/Ashwini_Mane_Resume.pdf';
 
 export default function Home() {
