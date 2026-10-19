@@ -135,7 +135,7 @@ export default function Footer() {
 
       {/* Middle Section: Huge Name */}
       <div className="footer-hero">
-        <div className="footer-location">FULL STACK ENGINEER · SATARA, INDIA</div>
+        <div className="footer-location">FULL STACK ENGINEER · Maharashtra, INDIA</div>
         <div className="footer-name">
           <span className="text-blue">ASHWINI</span> 
           <span className="glowing-dot"></span> 

@@ -1,176 +1,371 @@
+
 import React from 'react';
 
 export default function Contact() {
+  const email = 'ashumane2005@gmail.com';
+
+  // Opens Gmail with your email already filled in.
+  const gmailLink =
+    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`;
+
   return (
-    <section id="contact" style={{ paddingBottom: '8rem', paddingTop: '6rem' }}>
+    <section id="contact" className="contact-section">
       <style>{`
-        /* Animations */
-        @keyframes slideUpFade {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes contactSlideUp {
+          from {
+            opacity: 0;
+            transform: translateY(35px) scale(0.98);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
-        @keyframes pulseGlow {
-          0% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0.2); }
-          70% { box-shadow: 0 0 0 30px rgba(123, 97, 255, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(123, 97, 255, 0); }
+        @keyframes contactGlow {
+          0%, 100% {
+            opacity: 0.45;
+            transform: translate(-50%, -50%) scale(1);
+          }
+          50% {
+            opacity: 0.85;
+            transform: translate(-50%, -50%) scale(1.15);
+          }
+        }
+
+        @keyframes contactButtonIn {
+          from {
+            opacity: 0;
+            transform: translateY(15px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .contact-section {
+          padding: 6rem 8% 8rem;
+          box-sizing: border-box;
         }
 
         .contact-container {
-          text-align: center; 
-          max-width: 850px; 
+          text-align: center;
+          max-width: 850px;
           margin: 0 auto;
           background: var(--card-bg);
-          border: 1px solid var(--border-color); 
-          border-radius: 24px; 
+          border: 1px solid var(--border-color);
+          border-radius: 24px;
           padding: 5rem 3rem;
           position: relative;
+          isolation: isolate;
           overflow: hidden;
-          animation: slideUpFade 0.8s ease-out forwards;
+          box-sizing: border-box;
+          animation: contactSlideUp 0.8s cubic-bezier(.2,.7,.2,1) both;
+          transition:
+            transform 0.35s ease,
+            border-color 0.35s ease,
+            box-shadow 0.35s ease;
         }
 
-        /* The animated glowing background behind the box */
+        /* Subtle animated purple light */
         .contact-container::before {
           content: '';
           position: absolute;
-          top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          width: 300px; height: 300px;
-          background: radial-gradient(circle, rgba(123,97,255,0.15) 0%, rgba(0,0,0,0) 70%);
-          z-index: 0;
+          top: 50%;
+          left: 50%;
+          width: 320px;
+          height: 320px;
+          background: radial-gradient(
+            circle,
+            rgba(123, 97, 255, 0.18) 0%,
+            rgba(123, 97, 255, 0.04) 45%,
+            transparent 72%
+          );
+          z-index: -1;
           pointer-events: none;
-          animation: pulseGlow 4s infinite;
+          animation: contactGlow 5s ease-in-out infinite;
         }
-        
+
+        /* Decorative border highlight */
+        .contact-container::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 12%;
+          width: 76%;
+          height: 1px;
+          background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(123, 97, 255, 0.75),
+            transparent
+          );
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+        }
+
+        .contact-container:hover {
+          transform: translateY(-7px);
+          border-color: rgba(123, 97, 255, 0.55);
+          box-shadow:
+            0 20px 55px rgba(123, 97, 255, 0.12),
+            0 0 25px rgba(123, 97, 255, 0.05);
+        }
+
         .contact-content {
           position: relative;
-          z-index: 1; /* Keeps text above the glowing background */
+          z-index: 1;
         }
 
         .contact-subtitle {
-          font-size: 12px; 
-          color: #7b61ff; 
-          letter-spacing: 2px; 
+          font-size: 12px;
+          color: #9b85ff;
+          letter-spacing: 2px;
           text-transform: uppercase;
-          margin-bottom: 2rem; 
+          margin-bottom: 2rem;
           display: inline-flex;
           align-items: center;
           gap: 10px;
         }
-        .contact-subtitle::before, .contact-subtitle::after {
-          content: ''; width: 20px; height: 1px; background: #7b61ff; opacity: 0.5;
+
+        .contact-subtitle::before,
+        .contact-subtitle::after {
+          content: '';
+          width: 20px;
+          height: 1px;
+          background: #7b61ff;
+          opacity: 0.7;
         }
-        
-        .contact-title { 
-          font-family: 'Playfair Display', serif; 
-          font-size: 48px; 
-          line-height: 1.2; 
-          margin-bottom: 1.5rem;
+
+        .contact-title {
+          font-family: 'Playfair Display', serif;
+          font-size: 48px;
+          line-height: 1.2;
+          margin: 0 0 1.5rem;
         }
-        
-        .contact-desc { 
-          font-size: 16px; 
-          opacity: 0.8; 
-          line-height: 1.7; 
-          margin-bottom: 3rem; 
-          max-width: 650px; 
-          margin-inline: auto;
+
+        .contact-desc {
+          font-size: 16px;
+          opacity: 0.8;
+          line-height: 1.8;
+          margin: 0 auto 2.5rem;
+          max-width: 650px;
         }
-        
-        .contact-buttons { 
-          display: flex; 
-          justify-content: center; 
-          gap: 1.5rem; 
-          margin-bottom: 2.5rem; 
+
+        .contact-buttons {
+          display: flex;
+          justify-content: center;
+          gap: 1.2rem;
+          margin-bottom: 2rem;
           flex-wrap: wrap;
         }
-        
-        /* Shared Button Styles */
-        .btn {
-          padding: 14px 32px; 
-          border-radius: 30px; 
-          font-size: 15px; 
-          font-weight: 500;
-          text-decoration: none; 
-          display: inline-flex; 
-          align-items: center; 
+
+        .contact-btn {
+          padding: 14px 30px;
+          border-radius: 30px;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
           justify-content: center;
           gap: 10px;
-          transition: all 0.3s ease;
           border: 1px solid transparent;
+          cursor: pointer;
+          transition:
+            transform 0.3s ease,
+            background 0.3s ease,
+            color 0.3s ease,
+            border-color 0.3s ease,
+            box-shadow 0.3s ease;
+          animation: contactButtonIn 0.6s ease both;
         }
 
-        /* Button Icons */
-        .btn svg { transition: transform 0.3s ease; }
-        .btn:hover svg { transform: scale(1.15) rotate(5deg); }
-
-        /* Email Button */
-        .btn-email { 
-          background: #7b61ff; 
-          color: #ffffff; 
-          box-shadow: 0 4px 15px rgba(123,97,255,0.3);
+        .contact-btn:nth-child(1) {
+          animation-delay: 0.25s;
         }
-        .btn-email:hover { 
-          background: #6a4ff0; 
+
+        .contact-btn:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+
+        .contact-btn svg {
+          flex-shrink: 0;
+          transition: transform 0.3s ease;
+        }
+
+        .contact-btn:hover svg {
+          transform: scale(1.12);
+        }
+
+        .contact-btn:focus-visible {
+          outline: 2px solid #a997ff;
+          outline-offset: 4px;
+        }
+
+        .btn-email {
+          background: #7b61ff;
+          color: #ffffff;
+          box-shadow: 0 5px 18px rgba(123, 97, 255, 0.22);
+        }
+
+        .btn-email:hover {
+          background: #6a4ff0;
           transform: translateY(-4px);
-          box-shadow: 0 8px 25px rgba(123,97,255,0.5);
+          box-shadow: 0 10px 28px rgba(123, 97, 255, 0.38);
         }
-        
-        /* LinkedIn Button */
-        .btn-linkedin { 
-          background: transparent; 
-          border-color: var(--border-color); 
-          color: inherit; 
+
+        .btn-linkedin {
+          background: transparent;
+          border-color: var(--border-color);
+          color: inherit;
         }
-        .btn-linkedin:hover { 
-          background: var(--card-bg);
+
+        .btn-linkedin:hover {
+          background: rgba(123, 97, 255, 0.08);
           border-color: #7b61ff;
           transform: translateY(-4px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-        
-        .email-text { 
-          font-size: 14px; 
-          opacity: 0.6; 
-          letter-spacing: 1px;
+          box-shadow: 0 8px 22px rgba(123, 97, 255, 0.1);
         }
 
-        @media (max-width: 768px) { 
-          .contact-title { font-size: 32px; } 
-          .contact-container { padding: 3rem 1.5rem; } 
-          .contact-desc { font-size: 14px; }
-          .btn { width: 100%; } /* Full width buttons on mobile */
+        .contact-email {
+          font-size: 13px;
+          opacity: 0.65;
+          letter-spacing: 0.5px;
+          margin: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        .contact-container:hover .contact-email {
+          opacity: 0.95;
+        }
+
+        @media (max-width: 768px) {
+          .contact-section {
+            padding: 4rem 5% 5rem;
+          }
+
+          .contact-container {
+            padding: 3rem 1.5rem;
+            border-radius: 20px;
+          }
+
+          .contact-title {
+            font-size: 34px;
+          }
+
+          .contact-desc {
+            font-size: 14px;
+          }
+
+          .contact-buttons {
+            gap: 0.9rem;
+          }
+
+          .contact-btn {
+            width: 100%;
+            padding: 13px 20px;
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .contact-container,
+          .contact-btn {
+            animation: none;
+          }
+
+          .contact-container::before {
+            animation: none;
+          }
+
+          .contact-container,
+          .contact-btn,
+          .contact-btn svg {
+            transition: none;
+          }
         }
       `}</style>
 
       <div className="contact-container">
         <div className="contact-content">
-          <div className="contact-subtitle">LET'S CONNECT</div>
-          
+          <div className="contact-subtitle">
+            LET'S CONNECT
+          </div>
+
           <h2 className="contact-title">
-            Have an opportunity or an idea<br />
-            <span className="gradient-text">worth building?</span>
+            Have an opportunity or an idea
+            <br />
+            <span className="gradient-text">
+              worth building?
+            </span>
           </h2>
-          
+
           <p className="contact-desc">
-            Let's connect and build something meaningful together! I am always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+            I'm open to opportunities, collaborations,
+            and meaningful projects where I can contribute, learn,
+            and grow as a Python Full Stack Developer. Have an idea
+            or an opportunity in mind? Let's connect!
           </p>
-          
+
           <div className="contact-buttons">
-            {/* Email Link */}
-            <a href="mailto:ashumane2005@gmail.com" className="btn btn-email">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            {/* Opens Gmail with your address in the To field */}
+            <a
+              href={gmailLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-btn btn-email"
+              aria-label="Email Ashwini using Gmail"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="5" width="18" height="14" rx="2" />
+                <path d="m3 7 9 6 9-6" />
+              </svg>
               Email Me
+              <span aria-hidden="true">↗</span>
             </a>
-            
-            {/* LinkedIn Link */}
-            <a href="https://www.linkedin.com/in/ashwini-mane05/" target="_blank" rel="noreferrer" className="btn btn-linkedin">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+
+            {/* Opens your LinkedIn profile */}
+            <a
+              href="https://www.linkedin.com/in/ashwini-mane05/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-btn btn-linkedin"
+              aria-label="Visit Ashwini's LinkedIn profile"
+            >
+              <svg
+                width="19"
+                height="19"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
               LinkedIn
+              <span aria-hidden="true">↗</span>
             </a>
           </div>
-          
-          <p className="email-text">ashumane2005@gmail.com</p>
+
+          <p className="contact-email">
+            {email}
+          </p>
         </div>
       </div>
     </section>
