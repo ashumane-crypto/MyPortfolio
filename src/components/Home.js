@@ -438,7 +438,7 @@ export default function Home() {
 
           <a
             href={resumePdf}
-            download="Ashwini_Mane_Resume.pdf"
+            download="Ashwini_Mane_FullStackResume.pdf"
             className="btn btn-outline"
           >
             Download Resume ⬇
