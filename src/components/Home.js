@@ -1,7 +1,7 @@
 
 import React from 'react';
 import profilePic from '../assets/Profile.png';
-import resumePdf from '../assets/Ashwini_Mane_Resume.pdf';
+import resumePdf from '../assets/Ashwini_Mane_FullStackResume.pdf';
 
 export default function Home() {
   const firstName = 'Ashwini';
